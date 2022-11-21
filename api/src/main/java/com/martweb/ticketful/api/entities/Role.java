@@ -1,6 +1,7 @@
 package com.martweb.ticketful.api.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -8,8 +9,21 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 30)
     private String name;
+    @Column(nullable = false, length = 250)
     private String description;
+//    @ManyToMany
+//    private List<User> userRoles;
+
+    public Role() {
+    }
+
+    public Role(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;

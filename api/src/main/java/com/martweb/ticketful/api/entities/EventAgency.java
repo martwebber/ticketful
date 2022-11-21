@@ -1,6 +1,11 @@
 package com.martweb.ticketful.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "eventagencies")
@@ -12,7 +17,19 @@ public class EventAgency {
     private String eventAgencyName;
     private String eventAgencyDescription;
     private String address;
+    @JsonIgnore
+    @OneToMany(mappedBy = "eventAgency")
+//    @JoinColumn(name = "event_id", referencedColumnName = "id")
+    private Set<Event> events = new HashSet<>();
     private Boolean verified = false;
+
+//    public List<Event> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<Event> events) {
+//        this.events = events;
+//    }
 
     public Long getId() {
         return id;
@@ -60,5 +77,9 @@ public class EventAgency {
 
     public void setVerified(Boolean verified) {
         this.verified = verified;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
     }
 }
