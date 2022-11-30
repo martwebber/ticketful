@@ -8,3 +8,7 @@ import java.util.Optional;
 public interface EventAgencyRepository extends JpaRepository<EventAgency, Long> {
     Optional<EventAgency> findByEventAgencyName(String eventAgencyName);
 }
+
+// add roles to user
+// login logout
+// jwt authorization

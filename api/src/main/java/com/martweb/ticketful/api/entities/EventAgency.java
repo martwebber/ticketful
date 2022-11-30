@@ -20,16 +20,20 @@ public class EventAgency {
     @JsonIgnore
     @OneToMany(mappedBy = "eventAgency")
 //    @JoinColumn(name = "event_id", referencedColumnName = "id")
-    private Set<Event> events = new HashSet<>();
+    private List<Event> events;
+//    private Set<Event> events = new HashSet<>();
     private Boolean verified = false;
 
-//    public List<Event> getEvents() {
-//        return events;
-//    }
-//
-//    public void setEvents(List<Event> events) {
+//    public void setEvents(Set<Event> events) {
 //        this.events = events;
 //    }
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public Long getId() {
         return id;
@@ -79,7 +83,7 @@ public class EventAgency {
         this.verified = verified;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
+//    public Set<Event> getEvents() {
+//        return events;
+//    }
 }

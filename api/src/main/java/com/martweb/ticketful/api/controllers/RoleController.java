@@ -6,6 +6,8 @@ import com.martweb.ticketful.api.entities.Role;
 import com.martweb.ticketful.api.services.RoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +32,7 @@ public class RoleController {
         return ResponseEntity.of(role);
     }
     @PostMapping("/create")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> createNewRole(@Valid @RequestBody CreateRoleRequest createRoleRequest){
         var newRole = roleService.createNewRole(createRoleRequest);
         return ResponseEntity.status(201).body(newRole);

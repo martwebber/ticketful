@@ -7,6 +7,7 @@ import com.martweb.ticketful.api.entities.User;
 import com.martweb.ticketful.api.repositories.RoleRepository;
 import com.martweb.ticketful.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -38,9 +39,10 @@ public class UserService {
     }
 
     public User createNewUser(CreateUserRequest createUserRequest){
+        BCryptPasswordEncoder encodePassword = new BCryptPasswordEncoder();
         var getUsername = userRepository.findByUsername(createUserRequest.getUsername());
         var getEmail = userRepository.findByEmail(createUserRequest.getEmail());
-        var userRole = roleRepository.findByName("user").get();
+        var userRole = roleRepository.findByName("ROLE_USER").get();
         if(getUsername.isPresent()){
             System.out.println("The username already exist");
         }
@@ -54,7 +56,7 @@ public class UserService {
         user.setLastName(createUserRequest.getLastName());
         user.setUsername(createUserRequest.getUsername());
         user.setEmail(createUserRequest.getEmail());
-        user.setPassword(createUserRequest.getPassword());
+        user.setPassword(encodePassword.encode(createUserRequest.getPassword()));
         user.setVerified(createUserRequest.getVerified());
         user.addRole(userRole);
         userRepository.save(user);

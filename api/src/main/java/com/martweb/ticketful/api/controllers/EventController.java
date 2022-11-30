@@ -7,6 +7,7 @@ import com.martweb.ticketful.api.services.EventService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,7 @@ public class EventController {
     }
 
     @PostMapping("/create")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> createNewEvent(@RequestBody CreateEventRequest createEventRequest) throws ParseException {
         var newEvent = eventService.createNewEvent(createEventRequest);
         return ResponseEntity.status(201).body(newEvent);

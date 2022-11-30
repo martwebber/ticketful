@@ -37,15 +37,19 @@ public class EventService {
     }
     public Event createNewEvent(CreateEventRequest createEventRequest) throws ParseException {
         var newEvent = new Event();
-        var eventAgency = eventAgencyRepository.findById(createEventRequest.getEventAgencyId());
-        eventAgency.ifPresentOrElse(newEvent::setEventAgency,()->{
-            System.out.println("Event agency not found");
+        var eventAgency = eventAgencyRepository.findById(createEventRequest.getEventAgencyId()).orElseThrow(()->{
+            new Exception("Agency not found");
+            return null;
         });
+//        eventAgency.ifPresentOrElse(newEvent::setEventAgency,()->{
+//            System.out.println("Event agency not found");
+//        });
         newEvent.setEventTitle(createEventRequest.getEventTitle());
         newEvent.setEventDescription(createEventRequest.getEventDescription());
         newEvent.setEventVenue(createEventRequest.getEventVenue());
         newEvent.setEventBanner(createEventRequest.getEventBanner());
         newEvent.setDate(DateFormat.dateFormatter(createEventRequest.getDate()));
+        newEvent.setEventAgency(eventAgency);
         eventRepository.save(newEvent);
         return newEvent;
     }
@@ -59,7 +63,7 @@ public class EventService {
             System.out.println("Event agency not found");
         });
         if(updateEvent==null){
-            System.out.println("Event doesnot exist");
+            System.out.println("Event does not exist");
         }
         updateEvent.setEventTitle(updateEventRequest.getEventTitle());
         updateEvent.setEventDescription(updateEventRequest.getEventDescription());

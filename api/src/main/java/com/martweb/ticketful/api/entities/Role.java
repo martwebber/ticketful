@@ -25,6 +25,9 @@ public class Role {
         this.description = description;
     }
 
+    public Role(String aRoleName) {
+    }
+
     public Long getId() {
         return id;
     }
@@ -47,5 +50,10 @@ public class Role {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
